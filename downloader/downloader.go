@@ -31,7 +31,7 @@ func DownloadVideo(videoID string) error {
 
 	defer stream.Close()
 
-	file, err := os.Create(video.Title + ".mp4")
+	file, err := os.Create(normalizeFilename(video.Title) + ".mp4")
 
 	if err != nil {
 		return fmt.Errorf("failed to create file: %w", err)
@@ -82,7 +82,7 @@ func DownloadAudio(videoID string) error {
 
 	defer stream.Close()
 
-	file, err := os.Create(video.Title + ".mp3")
+	file, err := os.Create(normalizeFilename(video.Title) + ".mp3")
 
 	if err != nil {
 		return fmt.Errorf("failed to create file: %w", err)
@@ -122,4 +122,8 @@ func DownloadPlaylist(playlistID string, audio bool) error {
 	}
 
 	return nil
+}
+
+func normalizeFilename(filename string) string {
+	return regexp.MustCompile(`[^a-zA-Z0-9]`).ReplaceAllString(filename, "_")
 }
