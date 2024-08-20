@@ -126,5 +126,5 @@ func DownloadPlaylist(playlistID string, audio bool) error {
 }
 
 func normalizeFilename(filename string) string {
-	return regexp.MustCompile(`[^a-zA-Z0-9]`).ReplaceAllString(filename, "_")
+	return regexp.MustCompile(`[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]+`).ReplaceAllString(filename, "_")
 }
